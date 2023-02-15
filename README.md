@@ -1,5 +1,5 @@
 # ICTFVG
-Simple implementation of The Inner Circle Trader's (ICT - http://theinnercircletrader.com) Fair Value Gap (FVG).
+Simple indicator implementation of The Inner Circle Trader's (ICT - http://theinnercircletrader.com) Fair Value Gap (FVG) for the Ninjatrader V8 platform.
 
 The indicator has the following parameters:
 
