@@ -9,8 +9,26 @@ The indicator has the following parameters:
 
 **ATRs in Impulse Move** : The number of ATRs in a single bar to be considered an "Impulse" move. Defaults to 1.1.
 
+**Minimum FVG Size (Points)** : Filter FVGs based on gap size 
+
+**Display Consequent Encroachment Line** : FVG mid-point line
+
 **Display / hide filled FVGs**: Display or hide FVGs that are considered filled.
 
 **FVG fill condition options**
 - Pierce through (FVG is marked filled if price _pierces_ through, and not necessarily _close_ through)
 - Close through (FVG is marked filled only if price _closes_ through)
+
+## Detect FVGs in multiple underlying bar types
+FVGs can be detected in configurable multiple underlying bar types, irrespective of what the chart's data series is. For instance, you can display 15 minute FVGs on an hourly chart, or display 5 minute FVGs on a 1 minute chart, and so on.
+
+Supported underlying Data Series Types:
+- Tick
+- Volume
+- Second
+- Minute
+- Day
+- Week
+- Month
+- Year
+- Volumetric
