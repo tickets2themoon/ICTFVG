@@ -33,8 +33,7 @@ namespace NinjaTrader.NinjaScript.Indicators.Gemify
         Day,
         Week,
         Month,
-        Year,
-        Volumetric
+        Year
     }
 
     [Gui.CategoryOrder("FVG Data Series", 1)]
