@@ -75,7 +75,7 @@ namespace NinjaTrader.NinjaScript.Indicators.Gemify
         private ATR atr;
         private Brush FillBrush;
         private int MIN_BARS_REQUIRED = 3;
-        private DateTime future = DateTime.MaxValue;
+        private DateTime future;
 
         private bool IsDebug = false;
 
@@ -172,9 +172,13 @@ namespace NinjaTrader.NinjaScript.Indicators.Gemify
             // FVG only applies if there's been an impulse move
             if (Math.Abs(Highs[1][1] - Lows[1][1]) >= ImpulseFactor * atr.Value[0])
             {
-
                 Debug("Impulse move detected.");
 
+                // Set the future timestamp to be outside of _reasonable_ visible range for most user charts.
+                // 15 years is sufficiently outside of _most_ users charts, unless the user is viewing
+                // yearly FVGs. Even then, 15 years out should be sufficient for visual presentation purposes.
+                future = Times[1][0].AddYears(50);
+                
                 // Fair value gap while going UP
                 // Low[0] > High[2]
                 if (Lows[1][0] > Highs[1][2] && (Math.Abs(Lows[1][0] - Highs[1][2]) >= MinimumFVGSize))
@@ -247,7 +251,7 @@ namespace NinjaTrader.NinjaScript.Indicators.Gemify
                     if (!HideFilledGaps)
                     {
                         Brush BorderBrush = fvg.type == FVGType.R ? DownBrush : UpBrush;
-                        rect = Draw.Rectangle(this, "FILLEDFVG" + CurrentBars[1], false, fvg.gapStartTime, fvg.lowerPrice, Times[1][0], fvg.upperPrice, BorderBrush, FillBrush, FilledAreaOpacity, true);
+                        rect = Draw.Rectangle(this, "FILLEDFVG" + fvg.tag, false, fvg.gapStartTime, fvg.lowerPrice, Times[1][0], fvg.upperPrice, BorderBrush, FillBrush, FilledAreaOpacity, true);
                         rect.OutlineStroke.Opacity = Math.Min(100, FilledAreaOpacity * 4);
                     }
                 }
