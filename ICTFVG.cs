@@ -177,8 +177,8 @@ namespace NinjaTrader.NinjaScript.Indicators.Gemify
                 // Set the future timestamp to be outside of _reasonable_ visible range for most user charts.
                 // 50 years is sufficiently outside of _most_ users charts, unless the user is viewing
                 // yearly FVGs. Even then, 50 years out should be sufficient for visual presentation purposes.
-                future = Times[1][0].AddYears(50);
-                
+                future = Times[1][0].AddYears(Math.Min(50, DateTime.MaxValue.Year - Times[1][0].Year));
+
                 // Fair value gap while going UP
                 // Low[0] > High[2]
                 if (Lows[1][0] > Highs[1][2] && (Math.Abs(Lows[1][0] - Highs[1][2]) >= MinimumFVGSize))
