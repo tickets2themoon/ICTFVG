@@ -175,8 +175,8 @@ namespace NinjaTrader.NinjaScript.Indicators.Gemify
                 Debug("Impulse move detected.");
 
                 // Set the future timestamp to be outside of _reasonable_ visible range for most user charts.
-                // 15 years is sufficiently outside of _most_ users charts, unless the user is viewing
-                // yearly FVGs. Even then, 15 years out should be sufficient for visual presentation purposes.
+                // 50 years is sufficiently outside of _most_ users charts, unless the user is viewing
+                // yearly FVGs. Even then, 50 years out should be sufficient for visual presentation purposes.
                 future = Times[1][0].AddYears(50);
                 
                 // Fair value gap while going UP
