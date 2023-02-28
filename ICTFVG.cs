@@ -92,7 +92,7 @@ namespace NinjaTrader.NinjaScript.Indicators.Gemify
             if (State == State.SetDefaults)
             {
                 Description = @"Fair Value Gap (ICT)";
-                Name = "\"ICTFVG\"";
+                Name = "\"ICTFVG v0.0.2\"";
                 Calculate = Calculate.OnBarClose;
                 IsOverlay = true;
                 DisplayInDataBox = true;
