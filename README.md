@@ -33,4 +33,15 @@ Supported underlying Data Series Types:
 - Week
 - Month
 - Year
-- Volumetric
+
+## Sample Screenshots
+
+### 3-Minute FVGs on a 8 Renko Chart
+![3MinFVG_On_8Renko](https://github.com/OrderFlowTools/screenshots/blob/main/ictfvg/3minFVG_on_8renko.PNG)
+
+### 5-Minute FVGs on a 30 Minute Chart
+![5MinFVG_On_30Min](https://github.com/OrderFlowTools/screenshots/blob/main/ictfvg/5minFVG_on_30minute.PNG)
+
+### 6000-Tick FVGs on a 60 Minute Chart
+![6000TickFVG_On_60Min](https://github.com/OrderFlowTools/screenshots/blob/main/ictfvg/6000tickFVG_on_60min.PNG)
+
