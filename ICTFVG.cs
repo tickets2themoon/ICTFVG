@@ -76,6 +76,7 @@ namespace NinjaTrader.NinjaScript.Indicators.Gemify
         private Brush FillBrush;
         private int MIN_BARS_REQUIRED = 3;
         private DateTime future;
+        private String InstanceId;
 
         private bool IsDebug = false;
 
@@ -91,7 +92,7 @@ namespace NinjaTrader.NinjaScript.Indicators.Gemify
             if (State == State.SetDefaults)
             {
                 Description = @"Fair Value Gap (ICT)";
-                Name = "\"ICTFVG v0.0.2.1\"";
+                Name = "\"ICTFVG v0.0.2.2\"";
                 Calculate = Calculate.OnBarClose;
                 IsOverlay = true;
                 DisplayInDataBox = true;
@@ -136,7 +137,11 @@ namespace NinjaTrader.NinjaScript.Indicators.Gemify
                 Debug("Addding " + FVGBarsPeriodType + " [" + FVGSeriesPeriod + "] Series");
 
                 // Add additional data series
-                AddDataSeries(GetBarType(FVGBarsPeriodType), FVGSeriesPeriod);                
+                AddDataSeries(GetBarType(FVGBarsPeriodType), FVGSeriesPeriod);
+
+                // Helps keep track of draw object tags
+                // if multiple instances are present on the same chart
+                InstanceId = Guid.NewGuid().ToString();
             }
             else if (State == State.DataLoaded)
             {
@@ -159,7 +164,7 @@ namespace NinjaTrader.NinjaScript.Indicators.Gemify
             if (CurrentBars[1] <= (Bars.Count - Math.Min(Bars.Count, MaxBars)) + MIN_BARS_REQUIRED) return;
 
             if (DrawLabel) {
-                Draw.TextFixed(this, "FVG_PERIOD", FVGSeriesPeriod + " " + FVGBarsPeriodType + " FVG", LabelPosition, LabelTextBrush, LabelFont, LabelBorderBrush, LabelFillBrush, LabelFillOpacity);
+                Draw.TextFixed(this, "FVG_PERIOD_" + InstanceId, FVGSeriesPeriod + " " + FVGBarsPeriodType + " FVG", LabelPosition, LabelTextBrush, LabelFont, LabelBorderBrush, LabelFillBrush, LabelFillOpacity);
             }
 
             Debug("Checking for FVGs that are filled.");
@@ -186,7 +191,7 @@ namespace NinjaTrader.NinjaScript.Indicators.Gemify
                 {
                     Debug("Up FVG Found.");
 
-                    string tag = "FVGUP" + CurrentBar;
+                    string tag = "FVGUP_" + InstanceId + "_" + CurrentBars[1];
                     FVG fvg = new FVG(tag, FVGType.S, Highs[1][2], Lows[1][0], Times[1][2]);
                     Debug("Drawing Up FVG [" + fvg.gapStartTime + ", " + fvg.upperPrice + ", " + fvg.lowerPrice + "]");
                     Draw.Rectangle(this, tag, false, fvg.gapStartTime, fvg.upperPrice, future, fvg.lowerPrice, UpBrush, UpAreaBrush, ActiveAreaOpacity, true);
@@ -200,7 +205,7 @@ namespace NinjaTrader.NinjaScript.Indicators.Gemify
                 {
                     Debug("Down FVG Found.");
 
-                    string tag = "FVGDOWN" + CurrentBar; 
+                    string tag = "FVGDOWN_" + InstanceId + "_" + CurrentBars[1];
                     FVG fvg = new FVG(tag, FVGType.R, Highs[1][0], Lows[1][2], Times[1][2]);
                     Debug("Drawing Down FVG [" + fvg.gapStartTime + ", " + fvg.upperPrice + ", " + fvg.lowerPrice + "]");
                     Draw.Rectangle(this, tag, false, fvg.gapStartTime, fvg.upperPrice, future, fvg.lowerPrice, DownBrush, DownAreaBrush, ActiveAreaOpacity, true);
